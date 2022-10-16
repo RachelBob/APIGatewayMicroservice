@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  
+eureka:
+  instance:
+   hostname: localhost
+   
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: customer-microservice
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/customers/**
+            
+        - id: product-microservice
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/products/**
+          filters:
+            - name: JWTAuthorizationFilter
+            
+        - id: wishlist-microservice
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/wishlist/**
+            
+        - id: cart-microservice
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/cartitem/**
+            
+            
