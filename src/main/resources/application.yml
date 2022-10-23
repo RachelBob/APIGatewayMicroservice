@@ -1,16 +1,12 @@
 spring:
   application:
-    name: apigateway-microservice-ecommerce
+    name: apigateway-microservice-ecomm
   profiles:
-    active: local   
+    active: cloud   
 
 server:
   port: 8080
   
-eureka:
-  instance:
-   hostname: localhost
-   
 ---
    
 spring:
@@ -18,19 +14,19 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: customer-microservice-ecommerce
+        - id: customer-microservice-ecomm
           uri: http://localhost:8081/
           predicates:
             - Path=/customers/**
             
-        - id: product-microservice-ecommerce
+        - id: product-microservice-ecomm
           uri: http://localhost:8082/
           predicates:
             - Path=/products/**
           filters:
             - name: JWTAuthorizationFilter
             
-        - id: wishlist-microservice-ecommerce
+        - id: wishlist-microservice-ecomm
           uri: http://localhost:8083/
           predicates:
             - Path=/wishlist/**
@@ -38,7 +34,7 @@ spring:
           filters:
             - name: JWTAuthorizationFilter
             
-        - id: cart-microservice-ecommerce
+        - id: cart-microservice-ecomm
           uri: http://localhost:8084/
           predicates:
             - Path=/cartitem/**
@@ -47,33 +43,38 @@ spring:
             
 ---
 
+eureka:
+  client:
+   service-url:
+      defaultZone: https://eureka-server-ecommerce.herokuapp.com/eureka
+
 spring:
   config.activate.on-profile: cloud
   cloud:
     gateway:
       routes:
-        - id: customer-microservice-ecommerce
-          uri: http://customer-microservice-ecommerce.herokuapp.com/
+        - id: customer-microservice-ecomm
+          uri: http://customer-microservice-ecomm.herokuapp.com/
           predicates:
             - Path=/customers/**
             
-        - id: product-microservice-ecommerce
-          uri: http://product-microservice-ecommerce.herokuapp.com/
+        - id: product-microservice-ecomm
+          uri: http://product-microservice-ecomm.herokuapp.com/
           predicates:
             - Path=/products/**
           filters:
             - name: JWTAuthorizationFilter
             
-        - id: wishlist-microservice-ecommerce
-          uri: http://wishlist-microservice-ecommerce.herokuapp.com/
+        - id: wishlist-microservice-ecomm
+          uri: http://wishlist-microservice-ecomm.herokuapp.com/
           predicates:
             - Path=/wishlist/**
             - Path=/wishlistProduct/**
           filters:
             - name: JWTAuthorizationFilter
             
-        - id: cart-microservice-ecommerce
-          uri: http://cart-microservice-ecommerce.herokuapp.com/
+        - id: cart-microservice-ecomm
+          uri: http://cart-microservice-ecomm.herokuapp.com/
           predicates:
             - Path=/cartitem/**
           filters:
