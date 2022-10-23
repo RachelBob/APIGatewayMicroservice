@@ -7,30 +7,35 @@ eureka:
    
 spring:
   application:
-    name: API-GATEWAY
+    name: apigateway-microservice-ecommerce
   cloud:
     gateway:
       routes:
-        - id: customer-microservice
+        - id: customer-microservice-ecommerce
           uri: http://localhost:8081/
           predicates:
             - Path=/customers/**
             
-        - id: product-microservice
+        - id: product-microservice-ecommerce
           uri: http://localhost:8082/
           predicates:
             - Path=/products/**
           filters:
             - name: JWTAuthorizationFilter
             
-        - id: wishlist-microservice
+        - id: wishlist-microservice-ecommerce
           uri: http://localhost:8083/
           predicates:
             - Path=/wishlist/**
+            - Path=/wishlistProduct/**
+          filters:
+            - name: JWTAuthorizationFilter
             
-        - id: cart-microservice
+        - id: cart-microservice-ecommerce
           uri: http://localhost:8084/
           predicates:
             - Path=/cartitem/**
+          filters:
+            - name: JWTAuthorizationFilter
             
             
