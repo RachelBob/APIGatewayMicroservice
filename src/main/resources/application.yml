@@ -2,7 +2,7 @@ spring:
   application:
     name: apigateway-microservice-ecomm
   profiles:
-    active: cloud   
+    active: local   
 
 server:
   port: 8080
