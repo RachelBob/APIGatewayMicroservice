@@ -29,8 +29,7 @@ spring:
         - id: wishlist-microservice-ecomm
           uri: http://localhost:8083/
           predicates:
-            - Path=/wishlist/**
-            - Path=/wishlistProduct/**
+            - Path=/wishlist/**, /wishlistproduct/**
           filters:
             - name: JWTAuthorizationFilter
             
@@ -68,8 +67,7 @@ spring:
         - id: wishlist-microservice-ecomm
           uri: http://wishlist-microservice-ecomm.herokuapp.com/
           predicates:
-            - Path=/wishlist/**
-            - Path=/wishlistProduct/**
+            - Path=/wishlist/**, /wishlistproduct/**
           filters:
             - name: JWTAuthorizationFilter
             
