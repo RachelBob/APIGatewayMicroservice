@@ -27,10 +27,13 @@ public class JWTAuthorizationFilter extends AbstractGatewayFilterFactory<JWTAuth
 		return (exchange, chain) -> {
 			System.out.println("First pre filter" + exchange.getRequest());
 			
-			if(!exchange.getRequest().getHeaders().containsKey("jwtToken")) {
+			if(!exchange.getRequest().getHeaders().containsKey("Authorization")) {
+				return returnErrorResponse(exchange);
+			} else if(!exchange.getRequest().getHeaders().getOrEmpty("Authorization").get(0).startsWith("Bearer ")) {
 				return returnErrorResponse(exchange);
 			} else {
-				final String jwtToken = exchange.getRequest().getHeaders().getOrEmpty("jwtToken").get(0);
+				final String bearerToken[] = exchange.getRequest().getHeaders().getOrEmpty("Authorization").get(0).split(" ");
+				String jwtToken = bearerToken[bearerToken.length-1].trim();
 				boolean isValidJWT = jwtUtil.validateToken(jwtToken);
 				if(!isValidJWT) {
 					return returnErrorResponse(exchange);
