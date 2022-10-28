@@ -28,6 +28,7 @@ public class WebFluxSecurityConfig {
 		corsConfig.addAllowedOrigin("http://localhost:4200");
 		corsConfig.addAllowedMethod("*");
 		corsConfig.addAllowedHeader("*");
+		corsConfig.addExposedHeader("*");
 		
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", corsConfig);
